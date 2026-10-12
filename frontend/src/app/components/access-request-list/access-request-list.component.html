@@ -1,0 +1,40 @@
+<section class="card">
+  <h2>Submitted requests</h2>
+
+  @if (errorMessage) {
+    <div class="alert alert-error" role="alert">{{ errorMessage }}</div>
+  }
+
+  @if (loading) {
+    <p class="muted">Loading…</p>
+  } @else if (requests.length === 0 && !errorMessage) {
+    <p class="muted">No requests yet.</p>
+  } @else if (requests.length > 0) {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Account</th>
+            <th>Entitlement</th>
+            <th>Justification</th>
+            <th>Status</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (request of requests; track request.id) {
+            <tr>
+              <td>{{ request.id }}</td>
+              <td>{{ request.account }}</td>
+              <td>{{ request.entitlement }}</td>
+              <td>{{ request.justification || '—' }}</td>
+              <td><span class="badge">{{ request.status }}</span></td>
+              <td>{{ request.createdAt | date: 'medium' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

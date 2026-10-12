@@ -1,0 +1,35 @@
+<section class="card">
+  <h2>New access request</h2>
+
+  @if (errorMessage(); as message) {
+    <div class="alert alert-error" role="alert">{{ message }}</div>
+  }
+  @if (successMessage(); as message) {
+    <div class="alert alert-success" role="status">{{ message }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <label for="account">Account *</label>
+    <input id="account" type="text" formControlName="account" placeholder="max_mustermann" />
+    @if (hasError('account')) {
+      <small class="field-error">Account is required (max 100 characters).</small>
+    }
+
+    <label for="entitlement">Entitlement *</label>
+    <input id="entitlement" type="text" formControlName="entitlement" placeholder="auditor" />
+    @if (hasError('entitlement')) {
+      <small class="field-error">Entitlement is required (max 100 characters).</small>
+    }
+
+    <label for="justification">Justification</label>
+    <textarea id="justification" rows="3" formControlName="justification"
+              placeholder="Need access for audit"></textarea>
+    @if (hasError('justification')) {
+      <small class="field-error">Justification must be at most 1000 characters.</small>
+    }
+
+    <button type="submit" [disabled]="submitting()">
+      {{ submitting() ? 'Submitting…' : 'Submit request' }}
+    </button>
+  </form>
+</section>
